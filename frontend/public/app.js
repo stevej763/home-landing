@@ -66,11 +66,15 @@ async function loadAll() {
   render();
 }
 
-function faviconFor(url) {
+function faviconCandidates(url) {
   try {
-    return new URL(url).origin + '/favicon.ico';
+    const origin = new URL(url).origin;
+    return [
+      origin + '/favicon.ico',
+      'https://www.google.com/s2/favicons?sz=64&domain_url=' + encodeURIComponent(origin),
+    ];
   } catch {
-    return FALLBACK_ICON;
+    return [];
   }
 }
 
@@ -172,9 +176,16 @@ function buildLinkCard(link) {
 
   const icon = document.createElement('img');
   icon.className = 'link-icon';
-  icon.src = faviconFor(link.url);
+  const candidates = faviconCandidates(link.url);
+  let candidateIndex = 0;
+  icon.src = candidates[0] || FALLBACK_ICON;
   icon.alt = '';
   icon.onerror = () => {
+    candidateIndex += 1;
+    if (candidateIndex < candidates.length) {
+      icon.src = candidates[candidateIndex];
+      return;
+    }
     icon.onerror = null;
     icon.src = FALLBACK_ICON;
   };
