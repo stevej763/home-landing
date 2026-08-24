@@ -10,6 +10,9 @@
       var stored = localStorage.getItem('theme');
       var theme = stored || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
       document.documentElement.setAttribute('data-theme', theme);
+
+      var editMode = localStorage.getItem('editMode') === 'true';
+      document.documentElement.setAttribute('data-edit-mode', String(editMode));
     })();
   </script>
   <link rel="stylesheet" href="style.css" />
@@ -20,15 +23,16 @@
   <header class="topbar">
     <div class="topbar-title">
       <img src="logo.png" alt="" class="topbar-logo" />
-      <h1>Homelab</h1>
+      <h1>Steve's Lab</h1>
     </div>
     <div class="topbar-actions">
       <button id="theme-toggle" class="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle color theme">
         <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
         <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
       </button>
-      <button id="add-category-btn" class="btn btn-secondary">+ Category</button>
-      <button id="add-link-btn" class="btn btn-primary">+ Link</button>
+      <button id="edit-mode-toggle" class="btn btn-secondary" type="button" aria-pressed="false">Edit</button>
+      <button id="add-category-btn" class="btn btn-secondary edit-only">+ Category</button>
+      <button id="add-link-btn" class="btn btn-primary edit-only">+ Link</button>
     </div>
   </header>
 

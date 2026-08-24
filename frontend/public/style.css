@@ -20,6 +20,16 @@
   --text-dim: #5c6472;
 }
 
+:root:not([data-edit-mode="true"]) .edit-only {
+  display: none;
+}
+
+#edit-mode-toggle[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -39,6 +39,21 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
+const editModeToggle = document.getElementById('edit-mode-toggle');
+
+function setEditMode(enabled) {
+  document.documentElement.setAttribute('data-edit-mode', String(enabled));
+  localStorage.setItem('editMode', String(enabled));
+  editModeToggle.setAttribute('aria-pressed', String(enabled));
+  editModeToggle.textContent = enabled ? 'Done' : 'Edit';
+}
+
+setEditMode(document.documentElement.getAttribute('data-edit-mode') === 'true');
+
+editModeToggle.addEventListener('click', () => {
+  setEditMode(document.documentElement.getAttribute('data-edit-mode') !== 'true');
+});
+
 document.querySelectorAll('[data-close]').forEach((btn) => {
   btn.addEventListener('click', () => closeModal(document.getElementById(btn.dataset.close)));
 });
@@ -119,7 +134,7 @@ function buildCategorySection(category, links) {
 
   if (category) {
     const actions = document.createElement('div');
-    actions.className = 'category-header-actions';
+    actions.className = 'category-header-actions edit-only';
 
     const renameBtn = document.createElement('button');
     renameBtn.className = 'btn-icon';
@@ -214,7 +229,7 @@ function buildLinkCard(link) {
   card.appendChild(anchor);
 
   const actions = document.createElement('div');
-  actions.className = 'link-card-actions';
+  actions.className = 'link-card-actions edit-only';
 
   const editBtn = document.createElement('button');
   editBtn.type = 'button';
