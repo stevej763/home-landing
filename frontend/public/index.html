@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Steve's Lab</title>
   <link rel="icon" type="image/png" href="favicon.png" />
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,6 +23,10 @@
       <h1>Homelab</h1>
     </div>
     <div class="topbar-actions">
+      <button id="theme-toggle" class="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle color theme">
+        <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+        <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+      </button>
       <button id="add-category-btn" class="btn btn-secondary">+ Category</button>
       <button id="add-link-btn" class="btn btn-primary">+ Link</button>
     </div>

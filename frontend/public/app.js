@@ -32,6 +32,13 @@ const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
 document.getElementById('add-link-btn').addEventListener('click', () => openLinkModal());
 document.getElementById('add-category-btn').addEventListener('click', () => openCategoryModal());
 
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const root = document.documentElement;
+  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
 document.querySelectorAll('[data-close]').forEach((btn) => {
   btn.addEventListener('click', () => closeModal(document.getElementById(btn.dataset.close)));
 });
